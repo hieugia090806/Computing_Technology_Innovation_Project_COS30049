@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 #--Setup and Data Loading--#
-file_path = '../Data/SpamHamMail03.csv'
+file_path = '../Data/SpamHamDataset01.csv'
 X, Y = load_data(file_path)
 
 if X is None:
