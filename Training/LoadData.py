@@ -5,39 +5,30 @@ import csv
 
 def unify(val):
     v = str(val).lower().strip()
-    if v in ['1', '1.0', 'spam', 'malware', 'positive']: 
+    if v in ['1', '1.0', 'spam', 'malware', 'positive', 'bad']: 
         return 'SPAM'
     return 'HAM'
-
-#--Stép 2: Load Data--#
+#--Step 2: Load Data--#
 def load_data(file_path):
     try:
-        df = pd.read_csv(file_path, 
-                         encoding='latin-1', 
-                         engine='python',
-                         on_bad_lines='skip',
-                         quoting=csv.QUOTE_MINIMAL)
-        
+        df = pd.read_csv(file_path, encoding='latin-1', engine='python', on_bad_lines='skip')
         df = df.dropna()
-
-        df.columns = [col.lower().strip() for col in df.columns]
-        
-        if 'spam' in df.columns and 'text' in df.columns:
-            y_raw = df['spam']
-            x_raw = df['text']
-        elif 'v1' in df.columns:
-            y_raw = df['v1']
-            x_raw = df['v2']
+        #--Malware Mail--#
+        if 'classification' in df.columns:
+            Y = df['classification'].apply(unify)
+            # Extract features by dropping non-feature columns (like 'hash' and 'classification')
+            X = df.drop(columns=['hash', 'classification'], errors='ignore')
+            print(f"✅ Malware Data Loaded: {len(X)} rows (Numerical Features)")
+        #--Spam Ham Mail--#
         else:
-            y_raw = df.iloc[:, -1] 
-            x_raw = df.iloc[:, 0]
+            df.columns = [col.lower().strip() for col in df.columns]
+            Y = df.iloc[:, -1].apply(unify)
+            X = df.iloc[:, 0].astype(str)
 
-        X = x_raw.astype(str)
-        Y = y_raw.apply(unify)
-        
-        print(f"✅ Loaded successfully: {len(X)} rows from {file_path}")
+        print(f"✅ Data Loaded: {len(X)} rows.")
         return X, Y
-
     except Exception as e:
-        print(f"❌ Critical Error: {e}")
+        print(f"❌ LoadData Error: {e}")
         return None, None
+       
+        
