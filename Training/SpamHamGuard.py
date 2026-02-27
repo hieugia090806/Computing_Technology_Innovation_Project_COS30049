@@ -1,3 +1,4 @@
+#--For Spam and Ham Detect, my team uses the Mltimonial Naive Bayes--#
 #--Import libraries--#
 import time
 import seaborn as sns
@@ -10,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 #--Setup and Data Loading--#
-file_path = '../Data/SpamHamDataset04.csv'
+file_path = '../Data/SpamHamDataset03.csv'
 df = load_spam_ham_data(file_path)
 
 if df is None:
