@@ -7,7 +7,7 @@ from MultimonialNB import mulmonial_naive_bayes
 from sklearn.model_selection import train_test_split
 from LogisticRegression import logistic_regression_model
 #--Load Data--#
-file_path = "../Data/SpamHamDataset04.csv"
+file_path = "../Data/SpamHamDataset01.csv"
 df = load_spam_ham_data(file_path)
 
 if df is not None:
