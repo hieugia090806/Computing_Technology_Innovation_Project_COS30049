@@ -7,7 +7,7 @@ from MultimonialNB import mulmonial_naive_bayes
 from sklearn.model_selection import train_test_split
 from LogisticRegression import logistic_regression_model
 #--Load Data--#
-file_path = "../Data/SpamHamDataset01.csv"
+file_path = "../Data/SpamHamDataset04.csv"
 df = load_spam_ham_data(file_path)
 
 if df is not None:
@@ -22,7 +22,7 @@ if df is not None:
     print("[>] Processing Multinomial NB...")
     results.append({"Model": "Multinomial NB", **mulmonial_naive_bayes(X_train, X_test, Y_train, Y_test)})
     print("[>] Processing Linear SVM...")
-    results.append({"Model": "Lninear SVM", **support_vector_machine(X_train, X_test, Y_train, Y_test)})
+    results.append({"Model": "Linear SVM", **support_vector_machine(X_train, X_test, Y_train, Y_test)})
     print("[>] Processing Logistic Reg...")
     results.append({"Model": "Logistic Reg", **logistic_regression_model(X_train, X_test, Y_train, Y_test)})
     #--Print Professional Comparison Table--#
