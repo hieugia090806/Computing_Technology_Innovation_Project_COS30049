@@ -1,1 +1,0 @@
-#--This file code is for detecting newspaper (random forest)--#
