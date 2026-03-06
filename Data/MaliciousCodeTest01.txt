@@ -1,6 +1,0 @@
-powershell -enc VGhpc0lzRmFrZU1hbHdhcmVDb250ZW50 cmd.exe /c whoami
-VirtualAllocEx WriteProcessMemory CreateRemoteThread reg add HKCU
-suspicious network connection to 10.0.0.5:4444
-base64_decode_and_execute()
-download_payload_from_http://malicious-example.test
-

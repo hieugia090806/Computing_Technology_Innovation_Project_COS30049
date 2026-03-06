@@ -37,7 +37,7 @@ def dataset_fingerprinting(file_path):
 
     #-- SPAM AND HAM MAIL DETECTION. --#
     if 'spam' in sample_content or 'ham' in sample_content:
-        return "Spam/Ham Email"
+        return "Spam and Ham Email"
 
     return "Unknown dataset"
 
