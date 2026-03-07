@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI System Analysis</title>
+    <style>
+        table { width: 50%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .matrix-img { margin-top: 20px; border: 1px solid #ddd; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>System Analysis Report</h2>
+    
+    <form method="POST">
+        <select name="file_name">
+            {% for f in files %}
+            <option value="{{ f }}">{{ f }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Run Analysis</button>
+    </form>
+
+    {% if results %}
+    <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td><strong>Accuracy</strong></td><td>{{ results.accuracy }}</td></tr>
+        <tr><td><strong>Training Time</strong></td><td>{{ results.duration }}</td></tr>
+        <tr><td><strong>Type</strong></td><td>{{ results.type }}</td></tr>
+    </table>
+
+    <h3>Confusion Matrix</h3>
+    <img src="/Results/{{ results.matrix_path }}" class="matrix-img" width="500">
+    {% endif %}
+</body>
+</html>
