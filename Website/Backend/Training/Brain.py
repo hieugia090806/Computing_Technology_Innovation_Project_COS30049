@@ -1,60 +1,71 @@
-#-- INFORMATION: This central script coordinates AI Experts and returns results --#
-import re
+#-- Brain.py --#
 import os
-import sys
 import matplotlib
-matplotlib.use('Agg') # Required for Flask to prevent threading crashes
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd
 from sklearn.metrics import confusion_matrix
 
-#-- Import custom expert modules --#
-from SpamHamDetect import SpamHamDetector
-from MalDetect import MalwareDetector
-from NewspaperLinkDetect import NewspaperLinkDetector
+from Training.SpamHamDetect import SpamHamDetector
+from Training.MalDetect import MalwareDetector
+from Training.NewspaperLinkDetect import NewspaperLinkDetector
 
-def run_analysis(file_path):
-    """Hybrid function for Terminal and Web usage"""
-    # Extract file number from path
-    match = re.search(r'\d+', os.path.basename(file_path))
-    file_num = int(match.group()) if match else 0
-    
-    # Navigation Logic
-    if 1 <= file_num <= 5:
-        dtype, expert = "Spam/Ham", SpamHamDetector()
-    elif 6 <= file_num <= 14 or file_num == 20:
-        dtype, expert = "Malware", MalwareDetector()
-    elif 15 <= file_num <= 25:
-        dtype, expert = "Newspaper", NewspaperLinkDetector()
-    else: 
-        return None
+# Khởi tạo Experts
+experts = {
+    'email': SpamHamDetector(),
+    'file': MalwareDetector(),
+    'url': NewspaperLinkDetector()
+}
 
-    # Run AI training and get results
-    acc, t_time, m_info, y_test, y_pred = expert.train_and_report(file_path)
-    
-    # Save image to the Results folder
-    # Assuming file_path is like ".../Data/Dataset14.csv"
-    # We save as ".../Results/Dataset14_Matrix.png"
-    base_name = os.path.basename(file_path).replace(".csv", "_Matrix.png")
-    # Go up one level from Training to Backend, then into Results
-    save_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Results", base_name)
-    
-    save_confusion_matrix(y_test, y_pred, dtype, acc, save_path)
-    
+def run_analysis(user_input, mode):
+    expert = experts.get(mode)
+    if not expert:
+        return {"error": "Invalid Mode"}
+
+    # 1. Xác định Category dựa trên Mode
+    category_map = {
+        'email': 'Category: Spam / Ham Detection',
+        'file': 'Category: Malware / Virus Analysis',
+        'url': 'Category: News Credibility Audit'
+    }
+    data_category = category_map.get(mode)
+
+    # 2. Train/Load kiến thức từ Dataset tương ứng
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Data")
+    acc, t_time, m_info, y_test, y_pred = expert.train_and_report(data_dir)
+
+    # 3. FIX LỖI "No Threats": Dùng AI thật để dự đoán user_input
+    # Chuyển văn bản user nhập thành vector mà AI hiểu được
+    input_vector = expert.vectorizer.transform([user_input])
+    prediction_result = expert.model.predict(input_vector)[0]
+
+    # Mapping kết quả dựa trên Mode
+    if mode == 'email':
+        final_decision = "SPAM DETECTED" if prediction_result == 1 else "HAM (SAFE)"
+    elif mode == 'file':
+        final_decision = "MALICIOUS (THREAT)" if prediction_result == 1 else "CLEAN (SAFE)"
+    else: # url
+        final_decision = "GENUINE NEWS" if prediction_result == 1 else "FAKE / SUSPICIOUS"
+
+    # 4. Lưu Confusion Matrix
+    matrix_filename = f"{mode}_matrix.png"
+    save_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Results", matrix_filename)
+    save_confusion_matrix(y_test, y_pred, data_category, acc, save_path)
+
     return {
+        "prediction": final_decision,
+        "data_type": data_category, # Thông tin bạn muốn in ra thêm
         "accuracy": f"{acc*100:.2f}%",
         "duration": f"{t_time:.4f}s",
-        "type": dtype,
         "model_info": m_info,
-        "matrix_path": base_name # Just the filename for the URL
+        "matrix_path": matrix_filename
     }
 
-def save_confusion_matrix(y_test, y_pred, dtype, acc, save_path):
-    cm = confusion_matrix(y_test, y_pred)
+def save_confusion_matrix(y_test, y_pred, title, acc, save_path):
     plt.figure(figsize=(6, 5))
+    cm = confusion_matrix(y_test, y_pred)
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-    plt.title(f'Analysis: {dtype} (Acc: {acc*100:.2f}%)')
+    plt.title(f'{title}\nAccuracy: {acc*100:.2f}%')
     plt.tight_layout()
     plt.savefig(save_path)
     plt.close()
