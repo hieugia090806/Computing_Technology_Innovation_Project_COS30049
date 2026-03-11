@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { FakeNewsDetector } from './components/FakeNewsDetector';
-import { SpamMalwareDetector } from './components/SpamMalwareDetector';
-import { Shield, Newspaper, Mail } from 'lucide-react';
+import { NewsDetector } from './components/NewsDetector';
+import { SpamHamDetector } from './components/SpamHamDetector';
+import { MalwareDetector } from './components/MalwareDetector'; // 1. Import mới nè
+import { Shield, Newspaper, Mail, Zap } from 'lucide-react';
 
+// Cập nhật Type cho currentView để nhận thêm 'malware'
 export default function App() {
-  const [currentView, setCurrentView] = useState<'news' | 'spam'>('news');
+  const [currentView, setCurrentView] = useState<'news' | 'spam' | 'malware'>('news');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
@@ -22,7 +24,7 @@ export default function App() {
               </div>
             </div>
             
-            {/* Navigation Tabs */}
+            {/* Navigation Tabs - Thêm nút Malware */}
             <div className="flex gap-2">
               <button
                 onClick={() => setCurrentView('news')}
@@ -33,9 +35,10 @@ export default function App() {
                 }`}
               >
                 <Newspaper className="w-4 h-4" />
-                <span className="hidden sm:inline">Fake News Detector</span>
+                <span className="hidden sm:inline">NewsLink</span>
                 <span className="sm:hidden">News</span>
               </button>
+
               <button
                 onClick={() => setCurrentView('spam')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
@@ -45,17 +48,32 @@ export default function App() {
                 }`}
               >
                 <Mail className="w-4 h-4" />
-                <span className="hidden sm:inline">Spam & Malware</span>
+                <span className="hidden sm:inline">Spam & Ham</span>
                 <span className="sm:hidden">Spam</span>
+              </button>
+
+              <button
+                onClick={() => setCurrentView('malware')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                  currentView === 'malware'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Mail className="w-4 h-4" />
+                <span className="hidden sm:inline">Malware Scan</span>
+                <span className="sm:hidden">Malware</span>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Content - 3. Render dựa trên state */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {currentView === 'news' ? <FakeNewsDetector /> : <SpamMalwareDetector />}
+        {currentView === 'news' && <NewsDetector />}
+        {currentView === 'spam' && <SpamHamDetector />}
+        {currentView === 'malware' && <MalwareDetector />}
       </main>
 
       {/* Footer */}

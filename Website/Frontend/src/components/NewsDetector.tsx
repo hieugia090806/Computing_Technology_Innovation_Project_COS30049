@@ -12,7 +12,7 @@ interface AnalysisResult {
   }[];
 }
 
-export function FakeNewsDetector() {
+export function NewsDetector() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
