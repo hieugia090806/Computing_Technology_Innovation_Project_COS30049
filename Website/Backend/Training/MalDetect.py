@@ -1,41 +1,44 @@
-import time
-import pandas as pd
+#-- Import crucial libraries. --#
 import os
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import SVC
+import joblib
+import pandas as pd
+from sklearn.svm import LinearSVC 
 from sklearn.metrics import accuracy_score
-
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+#-- MalwareDetector def for extracting data, learning from datasets, and predicting. --#
 class MalwareDetector:
     def __init__(self):
-        self.model = SVC(kernel='linear')
-        self.vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(2, 4))
+        self.model = LinearSVC(dual=False, random_state=42)
+        self.vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 3), max_features=5000)
+        self.model_path = os.path.join("Backend", "Results", "malware_model.pkl")
 
-    def train_and_report(self, data_dir='Data'):
-        start_time = time.time()
-        all_dfs = []
-        
-        # Quét Dataset 05 đến 14
-        for i in range(5, 15):
-            file_name = f"../Data/Dataset{str(i).zfill(2)}.csv"
-            file_path = os.path.join(data_dir, file_name)
-            if os.path.exists(file_path):
-                df = pd.read_csv(file_path, encoding='latin-1').dropna(axis=1, how='all')
-                all_dfs.append(df)
+    def train_and_report(self, root):
+        if os.path.exists(self.model_path):
+            data = joblib.load(self.model_path)
+            self.model, self.vectorizer = data['model'], data['vectorizer']
+            return data['results']
+
+        datasets_dir = os.path.join(root, "Backend", "Datasets")
+        all_dfs = [pd.read_csv(os.path.join(datasets_dir, f"Dataset{str(i).zfill(2)}.csv"), encoding='latin-1') 
+                   for i in range(5, 16) if os.path.exists(os.path.join(datasets_dir, f"Dataset{str(i).zfill(2)}.csv"))]
         
         full_df = pd.concat(all_dfs, ignore_index=True)
+        y = full_df.iloc[:, -1].apply(lambda x: 1 if str(x).strip() in ['1', '1.0', 'malware'] else 0).values
+        X_vec = self.vectorizer.fit_transform(full_df.iloc[:, 0].astype(str))
         
-        text_col = full_df.astype(str).apply(lambda x: x.str.len().mean()).idxmax()
-        label_col = full_df.nunique().idxmin()
+        self.model.fit(X_vec, y)
+        svd = TruncatedSVD(n_components=2)
+        results = {
+            "accuracy": accuracy_score(y, self.model.predict(X_vec)),
+            "y_test": y, "y_pred": self.model.predict(X_vec),
+            "cluster_data": (svd.fit_transform(X_vec), y)
+        }
         
-        bad_keys = ['phishing', 'malware', 'defacement', 'bad', '1', 1]
-        y_all = full_df[label_col].apply(lambda x: 1 if str(x).lower().strip() in [str(k) for k in bad_keys] else 0)
-        
-        X = self.vectorizer.fit_transform(full_df[text_col].astype(str))
-        X_train, X_test, y_train, y_test = train_test_split(X, y_all, test_size=0.2, random_state=42)
+        joblib.dump({'model': self.model, 'vectorizer': self.vectorizer, 'results': results}, self.model_path)
+        return results
 
-        self.model.fit(X_train, y_train)
-        y_pred = self.model.predict(X_test)
-        acc = accuracy_score(y_test, y_pred)
-        
-        return acc, (time.time() - start_time), "SVM (Malware Collective)", y_test, y_pred
+    def predict(self, text):
+        X_vec = self.vectorizer.transform([str(text)])
+        res = self.model.predict(X_vec)[0]
+        return "MALICIOUS" if res == 1 else "SAFE"

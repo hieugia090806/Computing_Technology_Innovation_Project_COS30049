@@ -1,41 +1,45 @@
-import time
-import pandas as pd
-import os
+#-- Import crucial libraries. --#
+import os, pandas as pd
+from sklearn.svm import SVC
+from sklearn.decomposition import TruncatedSVD
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+#-- Main SpamHamDetector def for extracting data, learning, and predicting. --#
 class SpamHamDetector:
     def __init__(self):
         self.model = SVC(kernel='linear')
         self.vectorizer = TfidfVectorizer(max_features=3000)
 
-    def train_and_report(self, data_dir='Data'):
-        start_time = time.time()
-        all_dfs = []
+    def train_and_report(self, website_root):
+        datasets_dir = os.path.join(website_root, "Backend", "Datasets")
+        path = os.path.join(datasets_dir, "Dataset_Spam.csv")
         
-        # Quét Dataset 01 đến 04
-        for i in range(1, 5):
-            file_name = f"../Data/Dataset{str(i).zfill(2)}.csv"
-            file_path = os.path.join(data_dir, file_name)
-            if os.path.exists(file_path):
-                df = pd.read_csv(file_path, encoding='latin-1').dropna(axis=1, how='all')
-                all_dfs.append(df)
-        
-        full_df = pd.concat(all_dfs, ignore_index=True)
-        
-        # Tự động tìm cột nội dung và cột nhãn
-        text_col = full_df.astype(str).apply(lambda x: x.str.len().mean()).idxmax()
-        label_col = next(c for c in full_df.columns if full_df[c].nunique() == 2)
-        
-        X = self.vectorizer.fit_transform(full_df[text_col].astype(str))
-        y = full_df[label_col].apply(lambda x: 1 if str(x).lower().strip() in ['spam', '1'] else 0)
+        if not os.path.exists(path):
+            path = os.path.join(website_root, "Backend", "TestData", "Test01.csv")
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        df = pd.read_csv(path, encoding='latin-1')
+        X_raw = df.iloc[:, 0].astype(str)
+        y = df.iloc[:, 1].str.lower().str.strip().apply(lambda x: 1 if x == 'spam' else 0).values
+
+        X_vec = self.vectorizer.fit_transform(X_raw)
+        X_train, X_test, y_train, y_test = train_test_split(X_vec, y, test_size=0.2, random_state=42)
+        
         self.model.fit(X_train, y_train)
-        
         y_pred = self.model.predict(X_test)
-        acc = accuracy_score(y_test, y_pred)
-        
-        return acc, (time.time() - start_time), "SVM (Multi-Dataset)", y_test, y_pred
+
+        # Dữ liệu vẽ biểu đồ
+        svd = TruncatedSVD(n_components=2)
+        X_2d = svd.fit_transform(X_vec)
+
+        return {
+            "accuracy": accuracy_score(y_test, y_pred),
+            "y_test": y_test,
+            "y_pred": y_pred,
+            "cluster_data": (X_2d, y)
+        }
+
+    def predict(self, text):
+        X_vec = self.vectorizer.transform([str(text)])
+        val = self.model.predict(X_vec)[0]
+        return "SPAM" if val == 1 else "HAM"

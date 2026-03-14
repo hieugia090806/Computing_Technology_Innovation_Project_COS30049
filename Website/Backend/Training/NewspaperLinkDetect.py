@@ -1,40 +1,52 @@
-import time
-import pandas as pd
+#-- Import crucial libraries. --#
 import os
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import SVC
+import joblib
+import pandas as pd
+from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
-
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+#-- Main NewspaperLinkDetector def for extracting data, learning, and predicting. --#
 class NewspaperLinkDetector:
     def __init__(self):
-        self.model = SVC(kernel='linear')
-        self.vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
+        self.model = LinearSVC(dual=False, random_state=42)
+        self.vectorizer = TfidfVectorizer(max_features=2000, stop_words='english')
+        self.label_map = None
+        self.model_path = os.path.join("Backend", "Results", "newspaper_model.pkl")
 
-    def train_and_report(self, data_dir='Data'):
-        start_time = time.time()
+    def train_and_report(self, root):
+        if os.path.exists(self.model_path):
+            data = joblib.load(self.model_path)
+            self.model, self.vectorizer, self.label_map = data['model'], data['vectorizer'], data['label_map']
+            return data['results']
+
+        datasets_dir = os.path.join(root, "Backend", "Datasets")
         all_dfs = []
-        
-        # Quét Dataset 15 đến 25
-        for i in range(15, 26):
-            file_name = f"../Data/Dataset{str(i).zfill(2)}.csv"
-            file_path = os.path.join(data_dir, file_name)
-            if os.path.exists(file_path):
-                df = pd.read_csv(file_path, encoding='latin-1')
-                all_dfs.append(df)
+        for i in range(16, 27):
+            p = os.path.join(datasets_dir, f"Dataset{str(i).zfill(2)}.csv")
+            if os.path.exists(p):
+                all_dfs.append(pd.read_csv(p, encoding='latin-1'))
         
         full_df = pd.concat(all_dfs, ignore_index=True)
+        text_col = next((c for c in full_df.columns if c.upper() in ['URL', 'TITLE']), full_df.columns[0])
+        label_col = next((c for c in full_df.columns if c.upper() in ['EXPECTED_LABEL', 'CATEGORY']), full_df.columns[-1])
 
-        text_col = 'TITLE' if 'TITLE' in full_df.columns else full_df.columns[0]
-        label_col = 'CATEGORY' if 'CATEGORY' in full_df.columns else full_df.columns[-1]
-
-        X = self.vectorizer.fit_transform(full_df[text_col].astype(str))
-        y = full_df[label_col]
-
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        self.model.fit(X_train, y_train)
+        y, self.label_map = pd.factorize(full_df[label_col])
+        X_vec = self.vectorizer.fit_transform(full_df[text_col].astype(str))
+        self.model.fit(X_vec, y)
         
-        y_pred = self.model.predict(X_test)
-        acc = accuracy_score(y_test, y_pred)
+        svd = TruncatedSVD(n_components=2)
+        results = {
+            "accuracy": accuracy_score(y, self.model.predict(X_vec)),
+            "y_test": y, "y_pred": self.model.predict(X_vec),
+            "cluster_data": (svd.fit_transform(X_vec), y)
+        }
         
-        return acc, (time.time() - start_time), "SVM (News Aggregator)", y_test, y_pred
+        os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
+        joblib.dump({'model': self.model, 'vectorizer': self.vectorizer, 'label_map': self.label_map, 'results': results}, self.model_path)
+        return results
+
+    def predict(self, text):
+        X_vec = self.vectorizer.transform([str(text)])
+        idx = self.model.predict(X_vec)[0]
+        return str(self.label_map[idx]).upper()
