@@ -1,0 +1,45 @@
+#--PowerShell Suspicious Patterns--#
+powershell -enc <base64_string>
+powershell -ExecutionPolicy Bypass -NoProfile
+IEX (New-Object Net.WebClient).DownloadString
+Start-Process hidden
+Invoke-Expression
+DownloadFile('http://suspicious-site.test/payload')
+#--Process Injection Patterns--#
+CreateRemoteThread
+VirtualAllocEx
+WriteProcessMemory
+NtCreateThreadEx
+SetWindowsHookEx
+QueueUserAPC
+#--Persistence Mechanisms--#
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+schtasks /create /sc onlogon
+Startup folder persistence
+CreateService auto start
+HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+#--Suspicious Network Activity--#
+connect to 192.168.0.100:4444
+reverse shell established
+socket(AF_INET, SOCK_STREAM)
+http://malicious-example.test
+POST /gate.php HTTP/1.1
+User-Agent: Mozilla/5.0 (suspicious client)
+#--Obfuscation/Encoding--#
+base64_decode_and_execute
+eval(base64_decode(
+charcode obfuscation
+XOR encrypted payload
+compressed shellcode
+#--Ransomware Indicators--#
+encrypt_files_in_directory
+generate_encryption_key
+delete_shadow_copies
+vssadmin delete shadows
+ransom_note.txt created
+#--Credential / Keylogging Behavior--#
+SetWindowsHookEx(WH_KEYBOARD_LL)
+GetAsyncKeyState
+credential_dump
+lsass memory access
+mimikatz pattern detected
