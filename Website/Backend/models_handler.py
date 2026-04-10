@@ -4,7 +4,7 @@ import pandas as pd
 import joblib
 import traceback
 
-MODEL_DIR = os.path.join(os.path.dirname(__file__), 'Backend/Model')
+MODEL_DIR = os.path.join(os.path.dirname(__file__), 'Model')
 
 
 class ModelsHandler:
