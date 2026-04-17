@@ -1,0 +1,9 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found
+"Hey Hieu, let's meet at the book cafe to study Linear Algebra. ",ham,0,HAM,
+The lecture on Artificial Intelligence paradigms was very interesting today.,ham,0,HAM,"today, very"
+I am working on the matrix transformation code for our project.,ham,0,HAM,
+Can you help me review the clean code principles for C#?,ham,0,HAM,help
+The deadline for the Cloud Computing assignment is next Friday.,ham,0,HAM,next
+I just updated the Notion dashboard for our group project.,ham,0,HAM,
+Do you want to grab some coffee before the lab session starts?,ham,0,HAM,"before, some, want"
+The scholarship interview for the Master program is scheduled for next month.,ham,1,SPAM,"next, program"

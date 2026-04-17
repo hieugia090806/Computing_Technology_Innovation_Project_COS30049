@@ -1,0 +1,7 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found
+Congratulations! You've won a $500 gift card. Click here to claim now!,spam,1,SPAM,"claim, click, here"
+"Hey Hieu, are we still meeting at the cafe for the project discussion?",ham,0,HAM,
+URGENT: Your account access has been restricted. Verify your identity immediately.,spam,1,SPAM,account
+Please find the attached document for the Computing Technology assignment.,ham,0,HAM,"find, technology"
+Get rich quick with our new crypto trading bot. Join for free today!,spam,1,SPAM,"free, today"
+The weather is great today. Do you want to go for a walk later?,ham,0,HAM,"great, today, want"

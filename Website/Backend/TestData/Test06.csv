@@ -1,12 +1,21 @@
-url,label
-https://tuoitre.vn/the-gioi/ukraine-nga-tiep-tuc-cang-thang.htm,Safe
-http://bit.ly/nhan-qua-tang-tin-tuc-moi-nhat,Malicious
-https://vnexpress.net/kinh-doanh/chung-khoan-hom-nay,Safe
-http://tin-tuc-nong-24h.xyz/dang-nhap-nhan-thuong,Malicious
-https://www.bbc.com/vietnamese/world-6851234,Safe
-http://secure-news-update.top/account-verification,Malicious
-https://thanhnien.vn/thoi-su/chinh-tri-trong-nuoc.htm,Safe
-http://phishing-news-alert.online/click-here,Malicious
-https://edition.cnn.com/markets/stocks-update,Safe
-http://quatang-baochi.tk/nhan-ve-mien-phi,Malicious
-
+Content,Label
+"Don't forget to submit the Artificial Intelligence lab report by midnight.",ham
+"I am debugging the C# Windows Forms application for our Tetris game.",ham
+"The AWS EC2 instance is running smoothly for our cloud project.",ham
+"Meeting at the book cafe at 2PM to discuss the group assignment.",ham
+"Your academic transcript has been updated on the student portal.",ham
+"Linear Algebra tutoring starts this Friday in the main library.",ham
+"Please review the clean code documentation before the final submission.",ham
+"Can we schedule a call to talk about the scholarship requirements?",ham
+"I just finished implementing the matrix multiplication algorithm in Python.",ham
+"The semester is almost over, let's focus on the final project demo.",ham
+"URGENT: Your account password expires in 10 minutes. Click to renew.",spam
+"Final Notice: You have an unclaimed tax refund of $1200. Claim now.",spam
+"Win a brand new MacBook Pro by spinning the lucky wheel today!",spam
+"Your Netflix subscription has been canceled. Update payment here.",spam
+"Private Offer: Get 50% discount on all AI certification courses.",spam
+"Make money fast by joining our premium crypto signal group.",spam
+"You have 1 new message from a recruiter. Click to view the job offer.",spam
+"Limited time: Buy cheap designer watches at 90% off. Free shipping.",spam
+"Your credit card was charged $499. If this wasn't you, click here.",spam
+"Congratulations! Your email address won the monthly grand prize.",spam

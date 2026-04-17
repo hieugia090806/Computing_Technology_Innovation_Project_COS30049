@@ -1,0 +1,51 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found
+Congratulations! You've won a $500 gift card. Click here to claim now!,spam,1,SPAM,"claim, click, here"
+"Hey Hieu, are we still meeting at the cafe for the project discussion?",ham,0,HAM,
+URGENT: Your account access has been restricted. Verify your identity immediately.,spam,1,SPAM,account
+Please find the attached document for the Computing Technology assignment.,ham,0,HAM,"find, technology"
+Get rich quick with our new crypto trading bot. Join for free today!,spam,1,SPAM,"free, today"
+The weather is great today. Do you want to go for a walk later?,ham,0,HAM,"great, today, want"
+Exclusive offer: Get 70% off on all designer watches for the next 24 hours.,spam,1,SPAM,"hours, next, offer"
+"Hi Hieu, could you please review the latest updates on the Notion dashboard?",ham,0,HAM,
+Your Amazon order has been shipped and will arrive by tomorrow evening.,ham,1,SPAM,order
+Final notice: Your Netflix subscription will be canceled unless you update payment.,spam,0,HAM,
+Are you coming to the AI workshop at the Ho Chi Minh campus this Friday?,ham,0,HAM,
+Invest only $100 and earn $5000 weekly! Guaranteed returns with no risk.,spam,0,HAM,only
+Don't forget to submit your Linear Algebra assignment before midnight.,ham,0,HAM,"before, don"
+You have 1 new voicemail from an unknown sender. Click to listen.,spam,1,SPAM,click
+I just finished reading Clean Code. It really changed how I think about functions.,ham,0,HAM,how
+Your tax refund is ready. Please provide your bank details to receive the funds.,spam,0,HAM,"bank, funds, provide, receive"
+Can we reschedule our meeting to 3 PM? I have a sudden doctor appointment.,ham,0,HAM,
+Get a professional degree in just 6 months. No exams required. Enroll now!,spam,1,SPAM,professional
+The MVP Trading Platform project brief is ready for your feedback.,ham,0,HAM,
+ALERT: Unusual login attempt detected on your social media account. Is this you?,spam,1,SPAM,account
+Meeting reminder: Group discussion for the Database Design course at 10 AM.,ham,0,HAM,
+Buy Bitcoin now! The price is predicted to skyrocket this weekend. Don't miss out.,spam,0,HAM,"buy, don"
+"Hi, I'm interested in the Tester position at Kyna English. Can we talk?",ham,0,HAM,
+"Limited time deal: Buy one pizza, get one free at all outlets today!",spam,1,SPAM,"buy, free, limited, today"
+The Python script for the Route Finding Problem is working perfectly now.,ham,0,HAM,
+Your Apple ID has been locked for security reasons. Click here to unlock.,spam,1,SPAM,"click, here, security"
+"Hey, are you free to play Resident Evil 3 tonight? I finally reached the end.",ham,1,SPAM,free
+Need a loan? Get instant approval with 0% interest for the first 3 months.,spam,0,HAM,"first, interest"
+The results for the Vovinam practical exam have been posted on the board.,ham,0,HAM,results
+Verify your email address to continue using our premium services for free.,spam,0,HAM,"address, email, free, services"
+"Hieu, could you help me with the matrix decomposition part of the homework?",ham,0,HAM,"help, part"
+Work from home and earn $50 per hour. No experience needed. Apply today!,spam,0,HAM,"home, per, today, work"
+The library is closing early today due to maintenance works. Please take note.,ham,0,HAM,"due, take, today"
+You've been selected for a secret shopper program. Earn money while you shop!,spam,0,HAM,"money, program, while"
+I'll be at the student lounge if you want to work on the AI project together.,ham,0,HAM,"want, work"
+Your subscription to the gaming magazine has been successfully renewed.,ham,0,HAM,
+Hot deals! Summer sale starts now with up to 80% discount on electronics.,spam,0,HAM,
+Can you send me the link to the Gilbert Strang's Linear Algebra lectures?,ham,1,SPAM,"link, send"
+Security Alert: Someone tried to change your password from a new device.,spam,0,HAM,security
+The faculty meeting has been moved to Room 402. See you there.,ham,0,HAM,see
+Join our exclusive investment club and start earning passive income today.,spam,0,HAM,"investment, today"
+"Hey, I found a great resource for AWS VPC configurations. I'll share it with you.",ham,0,HAM,great
+"Winner! You are the 1,000,000th visitor. Click here to claim your reward.",spam,1,SPAM,"claim, click, here"
+Let's grab a coffee before the next lecture starts. I'm near the entrance.,ham,0,HAM,"before, next"
+Debt relief program: Clear all your credit card bills with one easy payment.,spam,1,SPAM,"easy, program"
+The documentation for the serverless architecture on AWS is very clear.,ham,0,HAM,very
+URGENT: Your parcel is held at the customs. Pay $20 to release it now.,spam,0,HAM,
+Did you see the new update for the Notion 'Second Brain' template?,ham,0,HAM,see
+"Congratulations! You have been shortlisted for a $10,000 scholarship.",spam,0,HAM,
+See you at the graduation ceremony! I'm so proud of what we've achieved.,ham,0,HAM,see

@@ -1,0 +1,4 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found,Actual_Numeric
+Double your money in just 24 hours with our new crypto bot!,spam,0,HAM,"hours, money",1
+Your subscription will expire in 1 hour. Pay now to avoid interruption.,spam,0,HAM,,1
+Private invitation: Earn $5000 per week working from home.,spam,0,HAM,"home, per, week",1

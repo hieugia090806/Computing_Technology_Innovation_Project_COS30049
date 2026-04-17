@@ -1,12 +1,4 @@
-url,expected_label,case_type
-https://tuoitre.vn/kinh-te/gia-vang-hom-nay-tang-manh.htm,Real,Official News
-https://vnexpress.net/the-gioi/bau-cu-my-dien-bien-moi.html,Real,Official News
-http://vnnexpress.net/tin-nong-nhan-thuong-1-trieu,Fake,Typosquatting (Sai chính tả)
-https://www.bbc.com/news/world-asia-6854321,Real,Global News
-http://bit.ly/doc-bao-nhan-qua-mien-phi,Fake,Shortened URL (Link rút gọn)
-http://tin-tuc-online-247.xyz/cap-nhat-tai-khoan,Fake,Suspicious TLD (.xyz)
-https://thanhnien.vn/van-hoa/nghe-si-viet-va-thien-nguyen.htm,Real,Official News
-http://tuoitre-news.online/free-gift-card,Fake,Suspicious TLD (.online)
-https://edition.cnn.com/business/market-data,Real,Global News
-http://reuters-verify-user.top/secure-login,Fake,Phishing (Giả danh Reuters)
-
+"File_Content","Label"
+"X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*","1"
+"This is just a normal text file for testing purposes.","0"
+"eval(base64_decode('ZWNobyAnSGFja2VkJzs='));","1"

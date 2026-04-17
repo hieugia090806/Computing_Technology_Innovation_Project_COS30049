@@ -1,0 +1,21 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found
+Don't forget to submit the Artificial Intelligence lab report by midnight.,ham,0,HAM,"don, report"
+I am debugging the C# Windows Forms application for our Tetris game.,ham,1,SPAM,windows
+The AWS EC2 instance is running smoothly for our cloud project.,ham,0,HAM,
+Meeting at the book cafe at 2PM to discuss the group assignment.,ham,0,HAM,
+Your academic transcript has been updated on the student portal.,ham,0,HAM,
+Linear Algebra tutoring starts this Friday in the main library.,ham,0,HAM,
+Please review the clean code documentation before the final submission.,ham,0,HAM,before
+Can we schedule a call to talk about the scholarship requirements?,ham,0,HAM,call
+I just finished implementing the matrix multiplication algorithm in Python.,ham,0,HAM,
+"The semester is almost over, let's focus on the final project demo.",ham,0,HAM,
+URGENT: Your account password expires in 10 minutes. Click to renew.,spam,1,SPAM,"account, click"
+Final Notice: You have an unclaimed tax refund of $1200. Claim now.,spam,1,SPAM,claim
+Win a brand new MacBook Pro by spinning the lucky wheel today!,spam,0,HAM,today
+Your Netflix subscription has been canceled. Update payment here.,spam,0,HAM,here
+Private Offer: Get 50% discount on all AI certification courses.,spam,0,HAM,offer
+Make money fast by joining our premium crypto signal group.,spam,0,HAM,"make, money"
+You have 1 new message from a recruiter. Click to view the job offer.,spam,1,SPAM,"click, offer"
+Limited time: Buy cheap designer watches at 90% off. Free shipping.,spam,1,SPAM,"buy, free, limited"
+"Your credit card was charged $499. If this wasn't you, click here.",spam,1,SPAM,"click, here"
+Congratulations! Your email address won the monthly grand prize.,spam,0,HAM,"address, email"

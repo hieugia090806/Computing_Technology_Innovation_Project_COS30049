@@ -1,0 +1,9 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found
+URGENT: Your account has been compromised. Click here to reset now!,spam,1,SPAM,"account, click, here"
+Congratulations! You won a $1000 Walmart gift card. Claim it today.,spam,1,SPAM,"claim, today"
+Get a free iPhone 15 by participating in our 5-minute survey.,spam,1,SPAM,free
+Double your money in just 24 hours with our new crypto bot!,spam,0,HAM,"hours, money"
+Buy cheap medications online without any prescription. Fast shipping.,spam,1,SPAM,"buy, online, without"
+Your subscription will expire in 1 hour. Pay now to avoid interruption.,spam,0,HAM,
+Private invitation: Earn $5000 per week working from home.,spam,0,HAM,"home, per, week"
+Win a luxury watch by clicking this link. Limited time offer!,spam,1,SPAM,"limited, link, offer"

@@ -1,0 +1,7 @@
+Content,Label,Predicted_Label,Status,Spam_Keywords_Found,Actual_Numeric
+I am debugging the C# Windows Forms application for our Tetris game.,ham,1,SPAM,windows,0
+Win a brand new MacBook Pro by spinning the lucky wheel today!,spam,0,HAM,today,1
+Your Netflix subscription has been canceled. Update payment here.,spam,0,HAM,here,1
+Private Offer: Get 50% discount on all AI certification courses.,spam,0,HAM,offer,1
+Make money fast by joining our premium crypto signal group.,spam,0,HAM,"make, money",1
+Congratulations! Your email address won the monthly grand prize.,spam,0,HAM,"address, email",1
